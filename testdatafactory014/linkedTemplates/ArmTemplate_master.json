@@ -1,0 +1,148 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "testdatafactory014"
+		},
+		"AzureBlobStorage1_properties_typeProperties_serviceEndpoint": {
+			"type": "string",
+			"defaultValue": "https://testblobstoragedemo014.blob.core.windows.net/"
+		},
+		"LS_ADLSConnection_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://testazuredatalakegen2014.dfs.core.windows.net/"
+		},
+		"LS_BlobConnection_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "BlobConnectionString"
+		},
+		"LS_HTTPConnection_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{linkedService().baseURL}"
+		},
+		"LS_Keyvaultconnection_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://testkeyvault014.vault.azure.net/"
+		},
+		"LS_SQLConnection_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "SQLConnectionString"
+		},
+		"TR_EventTrigger_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/0b09d9a2-10b0-4bdb-966c-fa3ebfa3ba0a/resourceGroups/TestRG002/providers/Microsoft.Storage/storageAccounts/testblobstoragedemo014"
+		},
+		"TR_TumblingWindow_properties_pipeline_parameters_SourceBaseURL": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/"
+		},
+		"TR_TumblingWindow_properties_pipeline_parameters_SourceRelativeURL": {
+			"type": "string",
+			"defaultValue": "suresh12345/AzureDataEngineering_Batch/main/ecdc_data/cases_deaths.csv"
+		},
+		"AzureBlobStorage592_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/0b09d9a2-10b0-4bdb-966c-fa3ebfa3ba0a/resourceGroups/TestRG002/providers/Microsoft.Storage/storageAccounts/testblobstoragedemo014"
+		},
+		"AzureBlobStorage592_properties_groupId": {
+			"type": "string",
+			"defaultValue": "blob"
+		},
+		"AzureBlobStorage592_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"testblobstoragedemo014.blob.core.windows.net"
+			]
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "testdatafactory014_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LS_HTTPConnection_properties_typeProperties_url": {
+						"value": "[parameters('LS_HTTPConnection_properties_typeProperties_url')]"
+					},
+					"LS_Keyvaultconnection_properties_typeProperties_baseUrl": {
+						"value": "[parameters('LS_Keyvaultconnection_properties_typeProperties_baseUrl')]"
+					},
+					"LS_ADLSConnection_properties_typeProperties_url": {
+						"value": "[parameters('LS_ADLSConnection_properties_typeProperties_url')]"
+					},
+					"LS_BlobConnection_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('LS_BlobConnection_properties_typeProperties_connectionString_secretName')]"
+					},
+					"LS_SQLConnection_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('LS_SQLConnection_properties_typeProperties_connectionString_secretName')]"
+					},
+					"AzureBlobStorage592_properties_privateLinkResourceId": {
+						"value": "[parameters('AzureBlobStorage592_properties_privateLinkResourceId')]"
+					},
+					"AzureBlobStorage592_properties_groupId": {
+						"value": "[parameters('AzureBlobStorage592_properties_groupId')]"
+					},
+					"AzureBlobStorage592_properties_fqdns": {
+						"value": "[parameters('AzureBlobStorage592_properties_fqdns')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "testdatafactory014_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureBlobStorage1_properties_typeProperties_serviceEndpoint": {
+						"value": "[parameters('AzureBlobStorage1_properties_typeProperties_serviceEndpoint')]"
+					},
+					"TR_EventTrigger_properties_typeProperties_scope": {
+						"value": "[parameters('TR_EventTrigger_properties_typeProperties_scope')]"
+					},
+					"TR_TumblingWindow_properties_pipeline_parameters_SourceBaseURL": {
+						"value": "[parameters('TR_TumblingWindow_properties_pipeline_parameters_SourceBaseURL')]"
+					},
+					"TR_TumblingWindow_properties_pipeline_parameters_SourceRelativeURL": {
+						"value": "[parameters('TR_TumblingWindow_properties_pipeline_parameters_SourceRelativeURL')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'testdatafactory014_ArmTemplate_0')]"
+			]
+		}
+	]
+}
