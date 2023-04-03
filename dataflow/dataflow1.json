@@ -1,0 +1,98 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Json1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedText3",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText2",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "exists1"
+				},
+				{
+					"name": "flatten1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          AccountToContracts as (CustomerUID as string, AccountRowID as string, Contracts as (ContractCode as string, ContractTitle as string, ContractStatus as string, StartDate as string, EndDate as string, SalesChannel as string, ContractId as string, Version as string)[])[]",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'documentPerLine') ~> source1",
+				"source(output(",
+				"          CustomerUID as string,",
+				"          AccountRowID as string,",
+				"          ContractCode as string,",
+				"          ContractTitle as string,",
+				"          SalesChannel as string,",
+				"          ContractId as string,",
+				"          Version as string,",
+				"          ContractStatus as string,",
+				"          UpdateTime as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source2",
+				"source2, flatten1 exists(flatten1@AccountRowID == source2@AccountRowID",
+				"     && flatten1@ContractId == source2@ContractId,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> exists1",
+				"source1 foldDown(unroll(AccountToContracts.Contracts, AccountToContracts),",
+				"     mapColumn(",
+				"          CustomerUID = AccountToContracts.CustomerUID,",
+				"          AccountRowID = AccountToContracts.AccountRowID,",
+				"          ContractCode = AccountToContracts.Contracts.ContractCode,",
+				"          ContractTitle = AccountToContracts.Contracts.ContractTitle,",
+				"          ContractStatus = AccountToContracts.Contracts.ContractStatus,",
+				"          StartDate = AccountToContracts.Contracts.StartDate,",
+				"          EndDate = AccountToContracts.Contracts.EndDate,",
+				"          SalesChannel = AccountToContracts.Contracts.SalesChannel,",
+				"          ContractId = AccountToContracts.Contracts.ContractId,",
+				"          Version = AccountToContracts.Contracts.Version",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten1",
+				"exists1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          CustomerUID,",
+				"          AccountRowID,",
+				"          ContractCode,",
+				"          ContractTitle,",
+				"          SalesChannel,",
+				"          ContractId,",
+				"          Version,",
+				"          ContractStatus,",
+				"          UpdateTime",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}

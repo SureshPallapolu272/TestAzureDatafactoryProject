@@ -1,0 +1,61 @@
+{
+	"name": "DelimitedText3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_BlobConnection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "DerivedColumn1_data_preview.csv",
+				"container": "raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "CustomerUID",
+				"type": "String"
+			},
+			{
+				"name": "AccountRowID",
+				"type": "String"
+			},
+			{
+				"name": "ContractCode",
+				"type": "String"
+			},
+			{
+				"name": "ContractTitle",
+				"type": "String"
+			},
+			{
+				"name": "SalesChannel",
+				"type": "String"
+			},
+			{
+				"name": "ContractId",
+				"type": "String"
+			},
+			{
+				"name": "Version",
+				"type": "String"
+			},
+			{
+				"name": "ContractStatus",
+				"type": "String"
+			},
+			{
+				"name": "UpdateTime",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

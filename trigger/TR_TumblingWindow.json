@@ -1,0 +1,29 @@
+{
+	"name": "TR_TumblingWindow",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipeline": {
+			"pipelineReference": {
+				"referenceName": "PL_HTTP_TO ADLS",
+				"type": "PipelineReference"
+			},
+			"parameters": {
+				"SourceBaseURL": "https://raw.githubusercontent.com/",
+				"SourceRelativeURL": "suresh12345/AzureDataEngineering_Batch/main/ecdc_data/cases_deaths.csv"
+			}
+		},
+		"type": "TumblingWindowTrigger",
+		"typeProperties": {
+			"frequency": "Minute",
+			"interval": 5,
+			"startTime": "2023-03-30T02:48:00Z",
+			"delay": "00:00:00",
+			"maxConcurrency": 1,
+			"retryPolicy": {
+				"intervalInSeconds": 30
+			},
+			"dependsOn": []
+		}
+	}
+}

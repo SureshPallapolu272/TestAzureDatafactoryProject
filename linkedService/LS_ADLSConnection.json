@@ -1,0 +1,19 @@
+{
+	"name": "LS_ADLSConnection",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://testazuredatalakegen2014.dfs.core.windows.net/",
+			"accountKey": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_Keyvaultconnection",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "AccountKey"
+			}
+		}
+	}
+}

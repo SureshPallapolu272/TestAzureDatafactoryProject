@@ -1,0 +1,70 @@
+{
+	"name": "Json1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_BlobConnection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "AccountContractData.json",
+				"container": "raw"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"AccountToContracts": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"CustomerUID": {
+								"type": "string"
+							},
+							"AccountRowID": {
+								"type": "string"
+							},
+							"Contracts": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"ContractCode": {
+											"type": "string"
+										},
+										"ContractTitle": {
+											"type": "string"
+										},
+										"ContractStatus": {
+											"type": "string"
+										},
+										"StartDate": {
+											"type": "string"
+										},
+										"EndDate": {
+											"type": "string"
+										},
+										"SalesChannel": {
+											"type": "string"
+										},
+										"ContractId": {
+											"type": "string"
+										},
+										"Version": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

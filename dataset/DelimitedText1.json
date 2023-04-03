@@ -1,0 +1,81 @@
+{
+	"name": "DelimitedText1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_BlobConnection",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Database_SiebelContracts.csv",
+				"container": "raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "SiebelAccountRowID",
+				"type": "String"
+			},
+			{
+				"name": "CustomerUID",
+				"type": "String"
+			},
+			{
+				"name": "ContractCode",
+				"type": "String"
+			},
+			{
+				"name": "ContractTitle",
+				"type": "String"
+			},
+			{
+				"name": "ContractStatus",
+				"type": "String"
+			},
+			{
+				"name": "StartDate",
+				"type": "String"
+			},
+			{
+				"name": "EndDate",
+				"type": "String"
+			},
+			{
+				"name": "SalesChannel",
+				"type": "String"
+			},
+			{
+				"name": "ContractId",
+				"type": "String"
+			},
+			{
+				"name": "Version",
+				"type": "String"
+			},
+			{
+				"name": "InsertTime",
+				"type": "String"
+			},
+			{
+				"name": "UpdateTime",
+				"type": "String"
+			},
+			{
+				"name": "IsDefault",
+				"type": "String"
+			},
+			{
+				"name": "UserId",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
